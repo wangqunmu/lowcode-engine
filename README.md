@@ -2,4 +2,17 @@
 
 ## 开发流程
 
-详见[文档](./docs/docs/participate/index.md)
+### 环境
+需要`Node.js 16+`
+
+### 安装
+
+```bash
+# clone仓库到本地
+git clone git@github.com:alibaba/lowcode-engine.git
+cd lowcode-engine
+
+# 安装依赖
+npm install && npm run setup
+```
+
