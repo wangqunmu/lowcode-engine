@@ -16,11 +16,11 @@ cd lowcode-engine
 npm install && npm run setup
 ```
 
-### 调试
+### 本地调试流程
 
 > 需要将 demo 页面引入的几个 js/css 代理到 engine 项目，可以使用chrome插件 [XSwitch](./tools/xswitch.crx) 完成
 
-x代理规则如下：
+1. 配置`XSwitch`代理规则并保持开启：
 
 ```json
 {
@@ -53,4 +53,5 @@ x代理规则如下：
 }
 ```
 
-然后执行`npm start`，即可开始本地调试
+2. 执行`npm start`
+3. 访问[测试网址](https://lowcode-engine.cn/demo/demo-general/index.html)开始调试
