@@ -29,7 +29,6 @@ export class ProjectView extends Component<{ designer: Designer }> {
         const { project, projectSimulatorProps: simulatorProps } = designer;
         const Simulator = designer.simulatorComponent || BuiltinSimulatorHostView;
         const Loading = engineConfig.get('loadingComponent', BuiltinLoading);
-
         return (
             <div className="lc-project">
                 <div className="lc-simulator-shell">
