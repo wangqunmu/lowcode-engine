@@ -3,54 +3,54 @@
 import { createElement } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import {
-  globalContext,
-  Editor,
-  commonEvent,
-  engineConfig,
-  Setters as InnerSetters,
-  Hotkey as InnerHotkey,
-  IEditor,
+    globalContext,
+    Editor,
+    commonEvent,
+    engineConfig,
+    Setters as InnerSetters,
+    Hotkey as InnerHotkey,
+    IEditor,
 } from '@alilc/lowcode-editor-core';
 import {
-  IPublicTypeEngineOptions,
-  IPublicModelDocumentModel,
-  IPublicTypePluginMeta,
-  IPublicTypeDisposable,
-  IPublicApiPlugins,
-  IPublicApiWorkspace,
-  IPublicEnumPluginRegisterLevel,
+    IPublicTypeEngineOptions,
+    IPublicModelDocumentModel,
+    IPublicTypePluginMeta,
+    IPublicTypeDisposable,
+    IPublicApiPlugins,
+    IPublicApiWorkspace,
+    IPublicEnumPluginRegisterLevel,
 } from '@alilc/lowcode-types';
 import {
-  Designer,
-  LowCodePluginManager,
-  ILowCodePluginContextPrivate,
-  ILowCodePluginContextApiAssembler,
-  PluginPreference,
-  IDesigner,
+    Designer,
+    LowCodePluginManager,
+    ILowCodePluginContextPrivate,
+    ILowCodePluginContextApiAssembler,
+    PluginPreference,
+    IDesigner,
 } from '@alilc/lowcode-designer';
 import {
-  Skeleton as InnerSkeleton,
-  registerDefaults,
+    Skeleton as InnerSkeleton,
+    registerDefaults,
 } from '@alilc/lowcode-editor-skeleton';
 import {
-  Workspace as InnerWorkspace,
-  Workbench as WorkSpaceWorkbench,
-  IWorkspace,
+    Workspace as InnerWorkspace,
+    Workbench as WorkSpaceWorkbench,
+    IWorkspace,
 } from '@alilc/lowcode-workspace';
 
 import {
-  Hotkey,
-  Project,
-  Skeleton,
-  Setters,
-  Material,
-  Event,
-  Plugins,
-  Common,
-  Logger,
-  Canvas,
-  Workspace,
-  Config,
+    Hotkey,
+    Project,
+    Skeleton,
+    Setters,
+    Material,
+    Event,
+    Plugins,
+    Common,
+    Logger,
+    Canvas,
+    Workspace,
+    Config,
 } from '@alilc/lowcode-shell';
 import { isPlainObject } from '@alilc/lowcode-utils';
 import './modules/live-editing';
@@ -68,24 +68,24 @@ export * from './modules/designer-types';
 export * from './modules/lowcode-types';
 
 async function registryInnerPlugin(designer: IDesigner, editor: IEditor, plugins: IPublicApiPlugins): Promise<IPublicTypeDisposable> {
-  // 注册一批内置插件
-  const componentMetaParserPlugin = componentMetaParser(designer);
-  const defaultPanelRegistryPlugin = defaultPanelRegistry(editor);
-  await plugins.register(OutlinePlugin, {}, { autoInit: true });
-  await plugins.register(componentMetaParserPlugin);
-  await plugins.register(setterRegistry, {});
-  await plugins.register(defaultPanelRegistryPlugin);
-  await plugins.register(builtinHotkey);
-  await plugins.register(registerDefaults, {}, { autoInit: true });
+    // 注册一批内置插件
+    const componentMetaParserPlugin = componentMetaParser(designer);
+    const defaultPanelRegistryPlugin = defaultPanelRegistry(editor);
+    await plugins.register(OutlinePlugin, {}, { autoInit: true });
+    await plugins.register(componentMetaParserPlugin);
+    await plugins.register(setterRegistry, {});
+    await plugins.register(defaultPanelRegistryPlugin);
+    await plugins.register(builtinHotkey);
+    await plugins.register(registerDefaults, {}, { autoInit: true });
 
-  return () => {
-    plugins.delete(OutlinePlugin.pluginName);
-    plugins.delete(componentMetaParserPlugin.pluginName);
-    plugins.delete(setterRegistry.pluginName);
-    plugins.delete(defaultPanelRegistryPlugin.pluginName);
-    plugins.delete(builtinHotkey.pluginName);
-    plugins.delete(registerDefaults.pluginName);
-  };
+    return () => {
+        plugins.delete(OutlinePlugin.pluginName);
+        plugins.delete(componentMetaParserPlugin.pluginName);
+        plugins.delete(setterRegistry.pluginName);
+        plugins.delete(defaultPanelRegistryPlugin.pluginName);
+        plugins.delete(builtinHotkey.pluginName);
+        plugins.delete(registerDefaults.pluginName);
+    };
 }
 
 const innerWorkspace: IWorkspace = new InnerWorkspace(registryInnerPlugin, shellModelFactory);
@@ -123,24 +123,24 @@ const canvas = new Canvas(editor);
 let plugins: Plugins;
 
 const pluginContextApiAssembler: ILowCodePluginContextApiAssembler = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  assembleApis: (context: ILowCodePluginContextPrivate, pluginName: string, meta: IPublicTypePluginMeta) => {
-    context.hotkey = hotkey;
-    context.project = project;
-    context.skeleton = new Skeleton(innerSkeleton, pluginName, false);
-    context.setters = setters;
-    context.material = material;
-    const eventPrefix = meta?.eventPrefix || 'common';
-    context.event = new Event(commonEvent, { prefix: eventPrefix });
-    context.config = config;
-    context.common = common;
-    context.canvas = canvas;
-    context.plugins = plugins;
-    context.logger = new Logger({ level: 'warn', bizName: `plugin:${pluginName}` });
-    context.workspace = workspace;
-    context.registerLevel = IPublicEnumPluginRegisterLevel.Default;
-    context.isPluginRegisteredInWorkspace = false;
-  },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    assembleApis: (context: ILowCodePluginContextPrivate, pluginName: string, meta: IPublicTypePluginMeta) => {
+        context.hotkey = hotkey;
+        context.project = project;
+        context.skeleton = new Skeleton(innerSkeleton, pluginName, false);
+        context.setters = setters;
+        context.material = material;
+        const eventPrefix = meta?.eventPrefix || 'common';
+        context.event = new Event(commonEvent, { prefix: eventPrefix });
+        context.config = config;
+        context.common = common;
+        context.canvas = canvas;
+        context.plugins = plugins;
+        context.logger = new Logger({ level: 'warn', bizName: `plugin:${pluginName}` });
+        context.workspace = workspace;
+        context.registerLevel = IPublicEnumPluginRegisterLevel.Default;
+        context.isPluginRegisteredInWorkspace = false;
+    },
 };
 
 const innerPlugins = new LowCodePluginManager(pluginContextApiAssembler);
@@ -149,24 +149,24 @@ editor.set('innerPlugins' as any, innerPlugins);
 editor.set('plugins' as any, plugins);
 
 export {
-  skeleton,
-  plugins,
-  project,
-  setters,
-  material,
-  config,
-  event,
-  logger,
-  hotkey,
-  common,
-  workspace,
-  canvas,
+    skeleton,
+    plugins,
+    project,
+    setters,
+    material,
+    config,
+    event,
+    logger,
+    hotkey,
+    common,
+    workspace,
+    canvas,
 };
 // declare this is open-source version
 export const isOpenSource = true;
 export const __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = {
-  symbols,
-  classes,
+    symbols,
+    classes,
 };
 engineConfig.set('isOpenSource', isOpenSource);
 
@@ -179,71 +179,71 @@ engineConfig.set('ENGINE_VERSION', version);
 const pluginPromise = registryInnerPlugin(designer, editor, plugins);
 
 export async function init(
-  container?: HTMLElement,
-  options?: IPublicTypeEngineOptions,
-  pluginPreference?: PluginPreference,
-  ) {
-  await destroy();
-  let engineOptions = null;
-  if (isPlainObject(container)) {
-    engineOptions = container;
-    engineContainer = document.createElement('div');
-    engineContainer.id = 'engine';
-    document.body.appendChild(engineContainer);
-  } else {
-    engineOptions = options;
-    engineContainer = container;
-    if (!container) {
-      engineContainer = document.createElement('div');
-      engineContainer.id = 'engine';
-      document.body.appendChild(engineContainer);
+    container?: HTMLElement,
+    options?: IPublicTypeEngineOptions,
+    pluginPreference?: PluginPreference,
+) {
+    await destroy();
+    let engineOptions = null;
+    if (isPlainObject(container)) {
+        engineOptions = container;
+        engineContainer = document.createElement('div');
+        engineContainer.id = 'engine';
+        document.body.appendChild(engineContainer);
+    } else {
+        engineOptions = options;
+        engineContainer = container;
+        if (!container) {
+            engineContainer = document.createElement('div');
+            engineContainer.id = 'engine';
+            document.body.appendChild(engineContainer);
+        }
     }
-  }
-  engineConfig.setEngineOptions(engineOptions as any);
+    engineConfig.setEngineOptions(engineOptions as any);
 
-  const { Workbench } = common.skeletonCabin;
-  if (options && options.enableWorkspaceMode) {
-    const disposeFun = await pluginPromise;
-    disposeFun && disposeFun();
+    const { Workbench } = common.skeletonCabin;
+    if (options && options.enableWorkspaceMode) {
+        const disposeFun = await pluginPromise;
+        disposeFun && disposeFun();
+        render(
+            createElement(WorkSpaceWorkbench, {
+                workspace: innerWorkspace,
+                // skeleton: workspace.skeleton,
+                className: 'engine-main',
+                topAreaItemClassName: 'engine-actionitem',
+            }),
+            engineContainer,
+        );
+        innerWorkspace.enableAutoOpenFirstWindow = engineConfig.get('enableAutoOpenFirstWindow', true);
+        innerWorkspace.setActive(true);
+        innerWorkspace.initWindow();
+        innerHotkey.activate(false);
+        await innerWorkspace.plugins.init(pluginPreference);
+        return;
+    }
+
+    await plugins.init(pluginPreference as any);
+
     render(
-      createElement(WorkSpaceWorkbench, {
-        workspace: innerWorkspace,
-        // skeleton: workspace.skeleton,
-        className: 'engine-main',
-        topAreaItemClassName: 'engine-actionitem',
-      }),
-      engineContainer,
+        createElement(Workbench, {
+            skeleton: innerSkeleton,
+            className: 'engine-main',
+            topAreaItemClassName: 'engine-actionitem',
+        }),
+        engineContainer,
     );
-    innerWorkspace.enableAutoOpenFirstWindow = engineConfig.get('enableAutoOpenFirstWindow', true);
-    innerWorkspace.setActive(true);
-    innerWorkspace.initWindow();
-    innerHotkey.activate(false);
-    await innerWorkspace.plugins.init(pluginPreference);
-    return;
-  }
-
-  await plugins.init(pluginPreference as any);
-
-  render(
-    createElement(Workbench, {
-      skeleton: innerSkeleton,
-      className: 'engine-main',
-      topAreaItemClassName: 'engine-actionitem',
-    }),
-    engineContainer,
-  );
 }
 
 export async function destroy() {
-  // remove all documents
-  const { documents } = project;
-  if (Array.isArray(documents) && documents.length > 0) {
-    documents.forEach(((doc: IPublicModelDocumentModel) => project.removeDocument(doc)));
-  }
+    // remove all documents
+    const { documents } = project;
+    if (Array.isArray(documents) && documents.length > 0) {
+        documents.forEach(((doc: IPublicModelDocumentModel) => project.removeDocument(doc)));
+    }
 
-  // TODO: delete plugins except for core plugins
+    // TODO: delete plugins except for core plugins
 
-  // unmount DOM container, this will trigger React componentWillUnmount lifeCycle,
-  // so necessary cleanups will be done.
-  engineContainer && unmountComponentAtNode(engineContainer);
+    // unmount DOM container, this will trigger React componentWillUnmount lifeCycle,
+    // so necessary cleanups will be done.
+    engineContainer && unmountComponentAtNode(engineContainer);
 }
