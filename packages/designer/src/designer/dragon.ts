@@ -149,13 +149,11 @@ export class Dragon implements IDragon {
             if (e.which === 3 || e.button === 2) {
                 return;
             }
-
             // Get a new node to be dragged
             const dragObject = boost(e);
             if (!dragObject) {
                 return;
             }
-
             this.boost(dragObject, e);
         };
         shell.addEventListener('mousedown', mousedown as any);
