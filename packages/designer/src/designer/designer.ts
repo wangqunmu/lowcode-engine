@@ -208,6 +208,7 @@ export class Designer implements IDesigner {
         this.dragon.onDragend((e) => {
             const { dragObject, copy } = e;
             logger.debug('onDragend: dragObject ', dragObject, ' copy ', copy);
+            // 拖拽的位置
             const loc = this._dropLocation;
             if (loc) {
                 if (isLocationChildrenDetail(loc.detail) && loc.detail.valid !== false) {
