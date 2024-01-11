@@ -481,7 +481,7 @@ export class BuiltinSimulatorHost implements ISimulatorHost<BuiltinSimulatorProp
             ),
         ];
 
-        // wait 准备 iframe 内容、依赖库注入
+        // wait 准备 iframe 内容、依赖库注入。iframe里的render
         const renderer = await createSimulator(this, iframe, vendors);
 
         // TODO: !!! thinkof reload onloa
